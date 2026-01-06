@@ -2487,11 +2487,11 @@
 
         // 数据持久化函数
         function saveDataToStorage() {
-            localStorage.setItem('h5IndexData', JSON.stringify(tableData));
+            localStorage.setItem('DH1h5IndexData', JSON.stringify(tableData));
         }
 
         function loadDataFromStorage() {
-            const savedData = localStorage.getItem('h5IndexData');
+            const savedData = localStorage.getItem('DH1h5IndexData');
             if (savedData) {
                 return JSON.parse(savedData);
             }
@@ -3456,7 +3456,7 @@
             if (confirm('确定要重置数据吗？这将清除所有本地修改，恢复为GitHub securityconfig的数据。')) {
                 loadConfigFromGitHub().then(success => {
                     if (success) {
-                        localStorage.removeItem('h5IndexData');
+                        localStorage.removeItem('DH1h5IndexData');
                         showToast('数据已重置为GitHub securityconfig的初始状态', 'success');
                     } else {
                         showToast('GitHub数据加载失败，请检查网络连接', 'error');
