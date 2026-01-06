@@ -1020,7 +1020,7 @@
         <header>
             <div class="header-content">
                 <div>
-                    <h1>DH3项目HelpMe索引表</h1>
+                    <h1>DH1项目HelpMe索引表</h1>
                     <div class="header-status" id="headerStatus">
                         <i class="fas fa-info-circle"></i>
                         <span id="statusText">正在加载配置...</span>
@@ -3265,7 +3265,7 @@
                 worksheet['!cols'] = colWidths;
 
                 const workbook = XLSX.utils.book_new();
-                XLSX.utils.book_append_sheet(workbook, worksheet, 'DH3项目索引表');
+                XLSX.utils.book_append_sheet(workbook, worksheet, 'DH1项目索引表');
                 
                 const excelBuffer = XLSX.write(workbook, { 
                     bookType: 'xlsx', 
@@ -3331,8 +3331,8 @@
                 worksheet['!cols'] = colWidths;
 
                 const workbook = XLSX.utils.book_new();
-                XLSX.utils.book_append_sheet(workbook, worksheet, 'DH3项目索引表');
-                XLSX.writeFile(workbook, 'DH3项目HelpMe索引表.xlsx');
+                XLSX.utils.book_append_sheet(workbook, worksheet, 'DH1项目索引表');
+                XLSX.writeFile(workbook, 'DH1项目HelpMe索引表.xlsx');
                 
                 showToast('Excel文件下载成功！', 'success');
                 
@@ -3385,7 +3385,7 @@
                 worksheet['!cols'] = colWidths;
 
                 const workbook = XLSX.utils.book_new();
-                XLSX.utils.book_append_sheet(workbook, worksheet, 'DH3项目索引表');
+                XLSX.utils.book_append_sheet(workbook, worksheet, 'DH1项目索引表');
                 
                 const excelBuffer = XLSX.write(workbook, { 
                     bookType: 'xlsx', 
@@ -3423,7 +3423,7 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'DH3项目HelpMe索引表_更新版.html';
+            a.download = 'DH1项目HelpMe索引表_更新版.html';
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
