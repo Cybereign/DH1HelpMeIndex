@@ -46,7 +46,7 @@ const DEFAULT_TABLE_DATA = [
         "id": 6,
         "category": "责任分工",
         "title": "DH3项目研发总院智软内部责任分工",
-        "path": "https://acndoaymjsa1.feishu.cn/wiki/YyMcwejHNifAkfk0aEXcjdeQnTb?table=tbltH0YNXCFoOxNm&view=vewS54CcOf",
+        "path": "https://acndoaymjsa1.feishu.cn/wiki/F5JbwGoz1iI0eVk7SNZcMyetnDd?table=tblL7GTSCJjWcVnU",
         "type": "url",
         "note": "【飞书】仅包含东风研发总院智软内部相关责任人分工，仅智软群成员可访问"
     },
