@@ -22,9 +22,9 @@ const DEFAULT_TABLE_DATA = [
         "id": 3,
         "category": "整车配置",
         "title": "DH3整车配置清单",
-        "path": "https://acndoaymjsa1.feishu.cn/file/OIj0bkDXboXH3ExfXg7cbTzOnAh",
+        "path": "https://acndoaymjsa1.feishu.cn/file/DcMPbNUlAoIJ1QxhfFscwleJnid",
         "type": "url",
-        "note": "【飞书】DH3整车配置表\n12月3日版本"
+        "note": "【飞书】DH1整车配置表\n1月4日版本"
     },
         {
         "id": 4,
