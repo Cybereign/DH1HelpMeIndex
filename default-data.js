@@ -30,9 +30,9 @@ const DEFAULT_TABLE_DATA = [
         "id": 4,
         "category": "联系信息",
         "title": "DH项目整体联系人清单",
-        "path": "https://acndoaymjsa1.feishu.cn/sheets/Gbh8sTDmdhMD9DtZcC2c7trunRe",
+        "path": "https://dongfengyipai.feishu.cn/wiki/S4ZFw6mnfiG56NkuYsccRFUrnNd?table=tblCQ7798eaHKM2n&view=vew5Qwimte",
         "type": "url",
-        "note": "【飞书】包含DH1，DH3各业务板块联系人信息"
+        "note": "【飞书】DH1各业务板块联系人信息"
     },
     {
         "id": 5,
