@@ -8,12 +8,12 @@ const DEFAULT_TABLE_DATA = [
         "title": "DH1项目主计划",
         "path": "https://dongfengyipai.feishu.cn/slides/PpvuslOTblanEOd3FbKcUuHonve",
         "type": "url",
-        "note": "【飞书】DH3项目主计划\n12月8日版本"
+        "note": "【飞书】DH1项目主计划\n1月6日版本"
     },
            {
         "id": 2,
         "category": "整车配置",
-        "title": "DH3整车配置清单",
+        "title": "DH1整车配置清单",
         "path": "https://acndoaymjsa1.feishu.cn/file/DcMPbNUlAoIJ1QxhfFscwleJnid",
         "type": "url",
         "note": "【飞书】DH1整车配置表\n1月4日版本"
@@ -29,30 +29,21 @@ const DEFAULT_TABLE_DATA = [
     {
         "id": 4,
         "category": "设计评审",
-        "title": "DH3电子电气拓扑图",
-        "path": "w:\\yling",
+        "title": "DH1电子电气拓扑图",
+        "path": "",
         "type": "folder",
-        "note": "【内网】w:\\yling\n请确保你的账号已经切换到内网"
+        "note": "【内网】预留待更新\n请确保你的账号已经切换到内网"
     },
     {
         "id": 5,
         "category": "阶段评审",
-        "title": "DH3项目J2阶段评审材料归档路径",
-        "path": "\\\\10.4.9.25\\Project\\DH系列\\130-智能软件\\DH3\\130100_ 阶段评审材料\\130102_ J2阶段评审材料及会议纪要",
+        "title": "DH1项目J5阶段评审材料归档路径",
+        "path": "\\\\10.4.9.25\\Project\\DH系列\\130-智能软件\\DH1\\130100_ 阶段评审材料\\130102_ J2阶段评审材料及会议纪要",
         "type": "folder",
-        "note": "【外网】请大家把J2材料及会议纪要放入此文件夹"
-    },
-
-    {
-        "id": 8,
-        "category": "联系信息",
-        "title": "DH3项目华为接口联系人清单",
-        "path": "https://acndoaymjsa1.feishu.cn/file/NI95bmHjpoopKBxVGhrc7S9SnUc",
-        "type": "url",
-        "note": "【飞书】包含华为座舱、智驾、网联相关接口人信息"
+        "note": "【外网】请大家把J5材料及会议纪要放入此文件夹"
     },
     {
-        "id": 9,
+        "id": 6,
         "category": "责任分工",
         "title": "DH3项目研发总院智软内部责任分工",
         "path": "https://acndoaymjsa1.feishu.cn/wiki/YyMcwejHNifAkfk0aEXcjdeQnTb?table=tbltH0YNXCFoOxNm&view=vewS54CcOf",
