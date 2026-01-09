@@ -30,9 +30,9 @@ const DEFAULT_TABLE_DATA = [
         "id": 4,
         "category": "设计评审",
         "title": "DH1电子电气拓扑图",
-        "path": "",
+        "path": "p:\DH系列\130-智能软件\03-正式方案网络设计\网络拓扑",
         "type": "folder",
-        "note": "【内网】预留待更新\n请确保你的账号已经切换到内网"
+        "note": "【内网】\n请确保你的账号已经切换到内网"
     },
     {
         "id": 5,
