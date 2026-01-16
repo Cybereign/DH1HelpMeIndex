@@ -45,10 +45,18 @@ const DEFAULT_TABLE_DATA = [
     {
         "id": 6,
         "category": "责任分工",
-        "title": "DH3项目研发总院智软内部责任分工",
+        "title": "DH1项目研发总院智软内部责任分工",
         "path": "https://acndoaymjsa1.feishu.cn/wiki/F5JbwGoz1iI0eVk7SNZcMyetnDd?table=tblL7GTSCJjWcVnU",
         "type": "url",
         "note": "【飞书】仅包含东风研发总院智软内部相关责任人分工，仅智软群成员可访问"
+    },
+    {
+        "id": 7,
+        "category": "再发防止",
+        "title": "DH1设计类故障再发防止",
+        "path": "https://dongfengyipai.feishu.cn/sheets/RqFFsAkeRhPgSutRG0tczl1NnPf?from=from_copylink&sheet=1cmpLH",
+        "type": "url",
+        "note": "【飞书】设计类故障再发防止"
     },
 ];
 
