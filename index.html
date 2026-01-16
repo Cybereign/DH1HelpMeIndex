@@ -2599,11 +2599,11 @@
 
         // 表头配置持久化
         function saveHeadersToStorage() {
-            localStorage.setItem('h5IndexHeaders', JSON.stringify(headerConfig));
+            localStorage.setItem('DH1h5IndexHeaders', JSON.stringify(headerConfig));
         }
 
         function loadHeadersFromStorage() {
-            const savedHeaders = localStorage.getItem('h5IndexHeaders');
+            const savedHeaders = localStorage.getItem('DH1h5IndexHeaders');
             if (savedHeaders) {
                 return JSON.parse(savedHeaders);
             }
@@ -2645,7 +2645,7 @@
 
         // 检查登录状态
         function checkLoginStatus() {
-            const savedUser = localStorage.getItem('h5IndexCurrentUser');
+            const savedUser = localStorage.getItem('DH1h5IndexCurrentUser');
             if (savedUser) {
                 const user = JSON.parse(savedUser);
                 loginSuccess(user);
@@ -3099,7 +3099,7 @@
             isLoggedIn = true;
             currentUser = user;
             
-            localStorage.setItem('h5IndexCurrentUser', JSON.stringify({
+            localStorage.setItem('DH1h5IndexCurrentUser', JSON.stringify({
                 username: user.username,
                 name: user.name,
                 permissions: user.permissions || ['read']
@@ -3148,7 +3148,7 @@
             const activeCategory = document.querySelector('.filter-btn.active')?.dataset.category || 'all';
             filterTable(searchTerm, activeCategory);
             
-            localStorage.removeItem('h5IndexCurrentUser');
+            localStorage.removeItem('DH1h5IndexCurrentUser');
             showToast('您已成功退出登录', 'info');
         }
 
@@ -3760,10 +3760,10 @@
             localStorage.removeItem('DH1h5IndexData');
             
             // 清除表头配置缓存
-            localStorage.removeItem('h5IndexHeaders');
+            localStorage.removeItem('DH1h5IndexHeaders');
             
             // 清除用户登录状态
-            localStorage.removeItem('h5IndexCurrentUser');
+            localStorage.removeItem('DH1h5IndexCurrentUser');
             
             // 清除GitHub令牌
             localStorage.removeItem('githubToken');
