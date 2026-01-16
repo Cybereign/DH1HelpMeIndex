@@ -1422,7 +1422,7 @@
                 }
             }
 
-            async forceCreateFile(filePath, content, commitMessage) {
+            async forceCreateFile(filePath, content, sha, commitMessage) {
                 try {
                     let currentFile = null;
                     try {
@@ -1686,8 +1686,16 @@
                 // 添加随机参数防止浏览器缓存
                 const cacheBuster = `?t=${Date.now()}`;
                 const [configResponse, excelResponse] = await Promise.all([
-                    fetch(GITHUB_CONFIG_URL + cacheBuster).catch(() => { throw new Error('无法连接到GitHub配置'); }),
-                    fetch(GITHUB_EXCEL_URL + cacheBuster).catch(() => { throw new Error('无法连接到Excel文件'); })
+                    fetch(GITHUB_CONFIG_URL + cacheBuster, { 
+                        method: 'GET',
+                        mode: 'cors',
+                        cache: 'no-cache'
+                    }).catch(() => { throw new Error('无法连接到GitHub配置'); }),
+                    fetch(GITHUB_EXCEL_URL + cacheBuster, { 
+                        method: 'GET',
+                        mode: 'cors',
+                        cache: 'no-cache'
+                    }).catch(() => { throw new Error('无法连接到Excel文件'); })
                 ]);
                 
                 if (!configResponse.ok) throw new Error(`配置加载失败: HTTP ${configResponse.status}`);
@@ -1723,14 +1731,6 @@
             } catch (error) {
                 console.error('❌ GitHub配置加载失败:', error);
                 hideLoadingIndicator();
-                
-                const savedData = loadDataFromStorage();
-                if (savedData && savedData.length > 0) {
-                    updateStatus('warning', `GitHub配置加载失败: ${error.message}，使用本地缓存数据。您当前是访客模式，只能查看数据。请登录管理员账户以进行添加、编辑和删除操作。`);
-                } else {
-                    updateStatus('warning', `GitHub配置加载失败: ${error.message}，使用内置默认数据。您当前是访客模式，只能查看数据。请登录管理员账户以进行添加、编辑和删除操作。`);
-                }
-                
                 return false;
             }
         }
@@ -1745,7 +1745,11 @@
                 
                 // 添加缓存破坏参数
                 const cacheBuster = `?t=${Date.now()}`;
-                const excelResponse = await fetch(GITHUB_EXCEL_URL + cacheBuster);
+                const excelResponse = await fetch(GITHUB_EXCEL_URL + cacheBuster, { 
+                    method: 'GET',
+                    mode: 'cors',
+                    cache: 'no-cache'
+                });
                 
                 if (!excelResponse.ok) {
                     throw new Error(`Excel加载失败: HTTP ${excelResponse.status}`);
@@ -1755,7 +1759,11 @@
                 await processExcelData(arrayBuffer);
                 
                 // 重新加载配置
-                const configResponse = await fetch(GITHUB_CONFIG_URL + cacheBuster);
+                const configResponse = await fetch(GITHUB_CONFIG_URL + cacheBuster, { 
+                    method: 'GET',
+                    mode: 'cors',
+                    cache: 'no-cache'
+                });
                 if (configResponse.ok) {
                     const config = await configResponse.json();
                     adminAccounts = config.users || [];
@@ -1854,66 +1862,43 @@
             }
         }
 
-        // 修复的初始化流程
+        // 修复的初始化流程 - 优先显示默认数据
         document.addEventListener('DOMContentLoaded', async () => {
-            checkDefaultDataLoaded();
+            // 1. 先检查默认数据是否加载成功
+            const defaultDataLoaded = checkDefaultDataLoaded();
             
+            // 2. 加载表头配置
             const savedHeaders = loadHeadersFromStorage();
             if (savedHeaders) {
                 headerConfig = savedHeaders;
             }
             updateTableHeaders();
             
+            // 3. 加载GitHub令牌
             loadGitHubToken();
 
             configVersion.textContent = '配置版本: 加载中...';
             
-            updateStatus('info', '正在初始化系统...');
-            
-            let githubDataLoaded = false;
-            
-            try {
-                console.log('🔄 正在从GitHub securityconfig加载数据...');
-                githubDataLoaded = await loadConfigFromGitHub();
+            // 4. 立即显示默认数据，让用户看到内容
+            if (defaultDataLoaded) {
+                console.log('🔄 优先显示默认数据，同时尝试加载GitHub数据...');
                 
-                if (githubDataLoaded) {
-                    console.log('✅ 成功从GitHub securityconfig加载数据');
-                    appConfig.source = 'GitHub SecurityConfig';
+                // 先显示默认数据
+                const success = useDefaultConfig();
+                if (success) {
+                    updateStatus('info', '正在显示默认数据，同时尝试连接GitHub...');
+                    showToast('正在加载默认数据...', 'info');
+                    
+                    // 在后台尝试加载GitHub数据
+                    loadGitHubDataInBackground();
                 } else {
-                    console.log('❌ GitHub配置加载失败，尝试其他数据源');
+                    updateStatus('error', '默认数据加载失败，系统无法正常工作');
                 }
-                
-            } catch (error) {
-                console.error('❌ GitHub配置加载异常:', error);
-                githubDataLoaded = false;
-            }
-            
-            const savedData = loadDataFromStorage();
-            
-            if (githubDataLoaded) {
-                console.log('✅ 使用GitHub securityconfig数据');
-                appConfig.source = 'GitHub SecurityConfig';
-                
-            } else if (savedData && savedData.length > 0) {
-                console.log('🔄 GitHub加载失败，使用本地存储的数据');
-                tableData = savedData;
-                currentData = [...tableData];
-                renderTable(currentData);
-                updateStats();
-                appConfig.version = 'ver.temp';
-                appConfig.source = 'Cache';
-                
-                if (categoryList.length === 0 && tableData.length > 0) {
-                    initializeCategoriesFromData();
-                }
-                
             } else {
-                console.log('🔄 GitHub加载失败且无本地数据，使用默认数据');
-                useDefaultConfig();
+                updateStatus('error', '默认数据文件加载失败，系统无法正常工作');
             }
             
-            console.log(`📊 数据量: ${tableData.length} 条记录`);
-            
+            // 5. 设置事件监听器和其他初始化
             setupEventListeners();
             setupAuthEvents();
             checkLoginStatus();
@@ -1926,9 +1911,72 @@
             document.addEventListener('mousemove', resetAutoLogoutTimer);
             
             initSorting();
-            
-            showToast(`系统初始化完成，数据来源: ${appConfig.source}`, 'success');
         });
+
+        // 后台加载GitHub数据
+        async function loadGitHubDataInBackground() {
+            try {
+                console.log('🔄 后台尝试加载GitHub数据...');
+                
+                let githubDataLoaded = false;
+                let loadErrorMessage = '';
+                
+                try {
+                    githubDataLoaded = await loadConfigFromGitHub();
+                    
+                    if (githubDataLoaded) {
+                        console.log('✅ GitHub数据加载成功，更新显示');
+                        appConfig.source = 'GitHub SecurityConfig';
+                        
+                        // 更新显示
+                        const searchTerm = searchInput.value.toLowerCase();
+                        const activeCategory = document.querySelector('.filter-btn.active')?.dataset.category || 'all';
+                        filterTable(searchTerm, activeCategory);
+                        
+                        updateStatus('success', '已成功加载GitHub配置并更新数据');
+                        showToast('✅ GitHub数据加载成功，已更新显示！', 'success');
+                    } else {
+                        console.log('❌ GitHub数据加载失败');
+                        loadErrorMessage = 'GitHub连接失败';
+                        
+                        // 检查是否有本地缓存
+                        const savedData = loadDataFromStorage();
+                        if (savedData && savedData.length > 0) {
+                            console.log('🔄 使用本地缓存数据');
+                            tableData = savedData;
+                            currentData = [...tableData];
+                            renderTable(currentData);
+                            updateStats();
+                            appConfig.version = 'ver.temp';
+                            appConfig.source = 'Cache';
+                            
+                            if (categoryList.length === 0 && tableData.length > 0) {
+                                initializeCategoriesFromData();
+                            }
+                            
+                            updateStatus('warning', 'GitHub连接失败，使用本地缓存数据。您当前是访客模式，只能查看数据。请登录管理员账户以进行添加、编辑和删除操作。');
+                            showToast('使用本地缓存数据', 'warning');
+                        } else {
+                            console.log('🔄 保持默认数据显示');
+                            updateStatus('warning', 'GitHub连接失败，使用默认数据。您当前是访客模式，只能查看数据。请登录管理员账户以进行添加、编辑和删除操作。');
+                            showToast('GitHub连接失败，保持默认数据', 'warning');
+                        }
+                    }
+                } catch (error) {
+                    console.error('❌ GitHub数据加载异常:', error);
+                    loadErrorMessage = error.message;
+                    
+                    updateStatus('warning', `GitHub连接失败: ${error.message}，保持默认数据显示`);
+                    showToast('GitHub连接失败，保持默认数据', 'warning');
+                }
+                
+                console.log(`📊 最终数据量: ${tableData.length} 条记录，数据来源: ${appConfig.source}`);
+                
+            } catch (error) {
+                console.error('后台加载过程异常:', error);
+                updateStatus('warning', `后台加载异常: ${error.message}，保持默认数据`);
+            }
+        }
 
         // ========== 认证面板功能 ==========
 
