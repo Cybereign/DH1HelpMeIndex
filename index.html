@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DH3项目HelpMe索引表</title>
+    <title>DH1项目HelpMe索引表</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -1021,7 +1021,7 @@
         <header>
             <div class="header-content">
                 <div>
-                    <h1>DH3项目HelpMe索引表</h1>
+                    <h1>DH1项目HelpMe索引表</h1>
                     <div class="header-status" id="headerStatus">
                         <i class="fas fa-info-circle"></i>
                         <span id="statusText">正在初始化系统...</span>
@@ -1901,7 +1901,7 @@
 
                 // 3. 创建Excel工作簿
                 const workbook = XLSX.utils.book_new();
-                XLSX.utils.book_append_sheet(workbook, worksheet, 'DH3项目索引表');
+                XLSX.utils.book_append_sheet(workbook, worksheet, 'DH1项目索引表');
                 
                 // 4. 转换为Base64
                 const excelBuffer = XLSX.write(workbook, { 
@@ -2805,11 +2805,11 @@
 
         // 数据持久化函数
         function saveDataToStorage() {
-            localStorage.setItem('DH3h5IndexData', JSON.stringify(tableData));
+            localStorage.setItem('DH1h5IndexData', JSON.stringify(tableData));
         }
 
         function loadDataFromStorage() {
-            const savedData = localStorage.getItem('DH3h5IndexData');
+            const savedData = localStorage.getItem('DH1h5IndexData');
             if (savedData) {
                 return JSON.parse(savedData);
             }
@@ -2818,11 +2818,11 @@
 
         // 表头配置持久化
         function saveHeadersToStorage() {
-            localStorage.setItem('DH3h5IndexHeaders', JSON.stringify(headerConfig));
+            localStorage.setItem('DH1h5IndexHeaders', JSON.stringify(headerConfig));
         }
 
         function loadHeadersFromStorage() {
-            const savedHeaders = localStorage.getItem('DH3h5IndexHeaders');
+            const savedHeaders = localStorage.getItem('DH1h5IndexHeaders');
             if (savedHeaders) {
                 return JSON.parse(savedHeaders);
             }
@@ -2864,7 +2864,7 @@
 
         // 检查登录状态
         function checkLoginStatus() {
-            const savedUser = localStorage.getItem('DH3h5IndexCurrentUser');
+            const savedUser = localStorage.getItem('DH1h5IndexCurrentUser');
             if (savedUser) {
                 const user = JSON.parse(savedUser);
                 loginSuccess(user);
@@ -3361,7 +3361,7 @@
             isLoggedIn = true;
             currentUser = user;
             
-            localStorage.setItem('DH3h5IndexCurrentUser', JSON.stringify({
+            localStorage.setItem('DH1h5IndexCurrentUser', JSON.stringify({
                 username: user.username,
                 name: user.name,
                 permissions: user.permissions || ['read']
@@ -3410,7 +3410,7 @@
             const activeCategory = document.querySelector('.filter-btn.active')?.dataset.category || 'all';
             filterTable(searchTerm, activeCategory);
             
-            localStorage.removeItem('DH3h5IndexCurrentUser');
+            localStorage.removeItem('DH1h5IndexCurrentUser');
             showToast('您已成功退出登录', 'info');
         }
 
@@ -3623,7 +3623,7 @@
                 worksheet['!cols'] = colWidths;
 
                 const workbook = XLSX.utils.book_new();
-                XLSX.utils.book_append_sheet(workbook, worksheet, 'DH3项目索引表');
+                XLSX.utils.book_append_sheet(workbook, worksheet, 'DH1项目索引表');
                 
                 const excelBuffer = XLSX.write(workbook, { 
                     bookType: 'xlsx', 
@@ -3679,8 +3679,8 @@
                 worksheet['!cols'] = colWidths;
 
                 const workbook = XLSX.utils.book_new();
-                XLSX.utils.book_append_sheet(workbook, worksheet, 'DH3项目索引表');
-                XLSX.writeFile(workbook, 'DH3项目HelpMe索引表.xlsx');
+                XLSX.utils.book_append_sheet(workbook, worksheet, 'DH1项目索引表');
+                XLSX.writeFile(workbook, 'DH1项目HelpMe索引表.xlsx');
                 
                 showToast('Excel文件下载成功！', 'success');
                 
@@ -3702,7 +3702,7 @@
             const url = URL.revokeObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'DH3项目HelpMe索引表_更新版.html';
+            a.download = 'DH1项目HelpMe索引表_更新版.html';
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
@@ -3735,7 +3735,7 @@
             if (confirm('确定要重置数据吗？这将清除所有本地修改，恢复为GitHub securityconfig的数据。')) {
                 loadConfigFromGitHub(true).then(success => {
                     if (success) {
-                        localStorage.removeItem('DH3h5IndexData');
+                        localStorage.removeItem('DH1h5IndexData');
                         showToast('数据已重置为GitHub securityconfig的初始状态', 'success');
                     } else {
                         showToast('GitHub数据加载失败，请检查网络连接', 'error');
