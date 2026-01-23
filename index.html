@@ -2611,7 +2611,7 @@
             const sortedCategories = uniqueCategories.sort((a, b) => a.localeCompare(b, 'zh-CN'));
             
             sortedCategories.forEach((category, index) => {
-                const colorIndex = (index % 10) + 1;
+                const colorIndex = (index % 20) + 1;
                 colorMap[category] = `category-${colorIndex}`;
             });
             
