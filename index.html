@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DH3项目HelpMe索引表</title>
+    <title>DH1项目HelpMe索引表</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -1041,7 +1041,7 @@
         <header>
             <div class="header-content">
                 <div>
-                    <h1>DH3项目HelpMe索引表</h1>
+                    <h1>DH1项目HelpMe索引表</h1>
                     <div class="header-status" id="headerStatus">
                         <i class="fas fa-info-circle"></i>
                         <span id="statusText">正在初始化系统...</span>
@@ -1307,15 +1307,15 @@
     <script>
         // 默认数据
         const DEFAULT_TABLE_DATA = [
-            { id: 1, category: "项目管理", title: "DH3项目主文档", path: "https://example.com/dh3", type: "url", note: "项目主要文档和计划" },
+            { id: 1, category: "项目管理", title: "DH1项目主文档", path: "https://example.com/DH1", type: "url", note: "项目主要文档和计划" },
             { id: 2, category: "工具", title: "设计工具文件夹", path: "\\\\10.4.9.25\\Design\\Tools", type: "folder", note: "设计相关工具软件" },
-            { id: 3, category: "开发", title: "代码仓库", path: "https://github.com/Cybereign/DH3", type: "url", note: "项目代码仓库" },
-            { id: 4, category: "测试", title: "测试用例", path: "D:\\Projects\\DH3\\TestCases", type: "folder", note: "测试用例文档" },
+            { id: 3, category: "开发", title: "代码仓库", path: "https://github.com/Cybereign/DH1", type: "url", note: "项目代码仓库" },
+            { id: 4, category: "测试", title: "测试用例", path: "D:\\Projects\\DH1\\TestCases", type: "folder", note: "测试用例文档" },
             { id: 5, category: "文档", title: "API文档", path: "https://api.example.com/docs", type: "url", note: "API接口文档" },
             { id: 6, category: "项目管理", title: "进度跟踪表", path: "\\\\10.4.9.25\\Project\\Track", type: "folder", note: "项目进度跟踪" },
             { id: 7, category: "开发", title: "开发环境配置", path: "https://dev.example.com", type: "url", note: "开发环境访问地址" },
             { id: 8, category: "测试", title: "测试报告", path: "D:\\Reports\\Test", type: "folder", note: "测试报告汇总" },
-            { id: 9, category: "工具", title: "项目管理工具", path: "https://trello.com/dh3", type: "url", note: "项目看板管理" },
+            { id: 9, category: "工具", title: "项目管理工具", path: "https://trello.com/DH1", type: "url", note: "项目看板管理" },
             { id: 10, category: "文档", title: "用户手册", path: "\\\\10.4.9.25\\Docs\\Manual", type: "folder", note: "用户使用手册" }
         ];
 
@@ -1368,7 +1368,7 @@
         
         // GitHub配置信息
         const GITHUB_OWNER = 'Cybereign';
-        const GITHUB_REPO = 'DH3SecurityConfig';
+        const GITHUB_REPO = 'DH1SecurityConfig';
         const GITHUB_BRANCH = 'main';
         const GITHUB_CONFIG_BASE = `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}`;
         
@@ -1977,7 +1977,7 @@
 
                 // 3. 创建Excel工作簿
                 const workbook = XLSX.utils.book_new();
-                XLSX.utils.book_append_sheet(workbook, worksheet, 'DH3项目索引表');
+                XLSX.utils.book_append_sheet(workbook, worksheet, 'DH1项目索引表');
                 
                 // 4. 转换为Base64
                 const excelBuffer = XLSX.write(workbook, { 
@@ -2886,11 +2886,11 @@
 
         // 数据持久化函数
         function saveDataToStorage() {
-            localStorage.setItem('DH3h5IndexData', JSON.stringify(tableData));
+            localStorage.setItem('DH1h5IndexData', JSON.stringify(tableData));
         }
 
         function loadDataFromStorage() {
-            const savedData = localStorage.getItem('DH3h5IndexData');
+            const savedData = localStorage.getItem('DH1h5IndexData');
             if (savedData) {
                 return JSON.parse(savedData);
             }
@@ -2899,11 +2899,11 @@
 
         // 表头配置持久化
         function saveHeadersToStorage() {
-            localStorage.setItem('DH3h5IndexHeaders', JSON.stringify(headerConfig));
+            localStorage.setItem('DH1h5IndexHeaders', JSON.stringify(headerConfig));
         }
 
         function loadHeadersFromStorage() {
-            const savedHeaders = localStorage.getItem('DH3h5IndexHeaders');
+            const savedHeaders = localStorage.getItem('DH1h5IndexHeaders');
             if (savedHeaders) {
                 return JSON.parse(savedHeaders);
             }
@@ -2945,7 +2945,7 @@
 
         // 检查登录状态
         function checkLoginStatus() {
-            const savedUser = localStorage.getItem('DH3h5IndexCurrentUser');
+            const savedUser = localStorage.getItem('DH1h5IndexCurrentUser');
             if (savedUser) {
                 const user = JSON.parse(savedUser);
                 loginSuccess(user);
@@ -3442,7 +3442,7 @@
             isLoggedIn = true;
             currentUser = user;
             
-            localStorage.setItem('DH3h5IndexCurrentUser', JSON.stringify({
+            localStorage.setItem('DH1h5IndexCurrentUser', JSON.stringify({
                 username: user.username,
                 name: user.name,
                 permissions: user.permissions || ['read']
@@ -3491,7 +3491,7 @@
             const activeCategory = document.querySelector('.filter-btn.active')?.dataset.category || 'all';
             filterTable(searchTerm, activeCategory);
             
-            localStorage.removeItem('DH3h5IndexCurrentUser');
+            localStorage.removeItem('DH1h5IndexCurrentUser');
             showToast('您已成功退出登录', 'info');
         }
 
@@ -3704,7 +3704,7 @@
                 worksheet['!cols'] = colWidths;
 
                 const workbook = XLSX.utils.book_new();
-                XLSX.utils.book_append_sheet(workbook, worksheet, 'DH3项目索引表');
+                XLSX.utils.book_append_sheet(workbook, worksheet, 'DH1项目索引表');
                 
                 const excelBuffer = XLSX.write(workbook, { 
                     bookType: 'xlsx', 
@@ -3760,8 +3760,8 @@
                 worksheet['!cols'] = colWidths;
 
                 const workbook = XLSX.utils.book_new();
-                XLSX.utils.book_append_sheet(workbook, worksheet, 'DH3项目索引表');
-                XLSX.writeFile(workbook, 'DH3项目HelpMe索引表.xlsx');
+                XLSX.utils.book_append_sheet(workbook, worksheet, 'DH1项目索引表');
+                XLSX.writeFile(workbook, 'DH1项目HelpMe索引表.xlsx');
                 
                 showToast('Excel文件下载成功！', 'success');
                 
@@ -3783,7 +3783,7 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'DH3项目HelpMe索引表_更新版.html';
+            a.download = 'DH1项目HelpMe索引表_更新版.html';
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
@@ -3816,7 +3816,7 @@
             if (confirm('确定要重置数据吗？这将清除所有本地修改，恢复为GitHub securityconfig的数据。')) {
                 loadConfigFromGitHub(true).then(success => {
                     if (success) {
-                        localStorage.removeItem('DH3h5IndexData');
+                        localStorage.removeItem('DH1h5IndexData');
                         showToast('数据已重置为GitHub securityconfig的初始状态', 'success');
                     } else {
                         showToast('GitHub数据加载失败，请检查网络连接', 'error');
