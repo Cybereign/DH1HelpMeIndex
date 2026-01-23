@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DH1项目HelpMe索引表</title>
+    <title>DH3项目HelpMe索引表</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -571,6 +571,20 @@
             background: #f8f9ff;
         }
         
+        /* 统一的分类配色系统 */
+        :root {
+            --category-color-1: #1976d2;
+            --category-color-2: #388e3c;
+            --category-color-3: #f57c00;
+            --category-color-4: #c2185b;
+            --category-color-5: #7b1fa2;
+            --category-color-6: #00796b;
+            --category-color-7: #ff8f00;
+            --category-color-8: #d84315;
+            --category-color-9: #303f9f;
+            --category-color-10: #0097a7;
+        }
+        
         .category {
             display: inline-block;
             padding: 5px 12px;
@@ -579,41 +593,46 @@
             font-weight: 500;
         }
         
-        .category-1 { background: #e3f2fd; color: #1976d2; }
-        .category-2 { background: #e8f5e9; color: #388e3c; }
-        .category-3 { background: #fff3e0; color: #f57c00; }
-        .category-4 { background: #fce4ec; color: #c2185b; }
-        .category-5 { background: #f3e5f5; color: #7b1fa2; }
-        .category-6 { background: #e0f2f1; color: #00796b; }
-        .category-7 { background: #fff8e1; color: #ff8f00; }
-        .category-8 { background: #fbe9e7; color: #d84315; }
-        .category-9 { background: #e8eaf6; color: #303f9f; }
-        .category-10 { background: #e0f7fa; color: #0097a7; }
+        /* 分类标签使用统一的配色 */
+        .category-1 { background: #e3f2fd; color: var(--category-color-1); }
+        .category-2 { background: #e8f5e9; color: var(--category-color-2); }
+        .category-3 { background: #fff3e0; color: var(--category-color-3); }
+        .category-4 { background: #fce4ec; color: var(--category-color-4); }
+        .category-5 { background: #f3e5f5; color: var(--category-color-5); }
+        .category-6 { background: #e0f2f1; color: var(--category-color-6); }
+        .category-7 { background: #fff8e1; color: var(--category-color-7); }
+        .category-8 { background: #fbe9e7; color: var(--category-color-8); }
+        .category-9 { background: #e8eaf6; color: var(--category-color-9); }
+        .category-10 { background: #e0f7fa; color: var(--category-color-10); }
         
+        /* 链接使用相同的分类颜色 */
         .link {
-            color: #2575fc;
+            color: inherit; /* 继承分类颜色 */
             text-decoration: none;
-            transition: color 0.2s;
+            transition: opacity 0.2s;
+            font-weight: 500;
             display: flex;
             align-items: center;
             gap: 5px;
         }
         
         .link:hover {
-            color: #6a11cb;
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+        
+        /* 文件夹链接使用特定的绿色 */
+        .folder-link {
+            color: var(--category-color-2); /* 使用分类2的绿色 */
+        }
+        
+        .folder-link:hover {
+            opacity: 0.8;
             text-decoration: underline;
         }
         
         .link-icon {
             font-size: 0.9rem;
-        }
-        
-        .folder-link {
-            color: #28a745;
-        }
-        
-        .folder-link:hover {
-            color: #218838;
         }
         
         .note {
@@ -673,6 +692,7 @@
             font-size: 0.7rem;
             margin-left: 8px;
             font-weight: 500;
+            opacity: 0.9;
         }
         
         .badge-url {
@@ -1021,7 +1041,7 @@
         <header>
             <div class="header-content">
                 <div>
-                    <h1>DH1项目HelpMe索引表</h1>
+                    <h1>DH3项目HelpMe索引表</h1>
                     <div class="header-status" id="headerStatus">
                         <i class="fas fa-info-circle"></i>
                         <span id="statusText">正在初始化系统...</span>
@@ -1284,7 +1304,63 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     
     <!-- 引入默认数据文件 -->
-    <script src="default-data.js"></script>
+    <script>
+        // 默认数据
+        const DEFAULT_TABLE_DATA = [
+            { id: 1, category: "项目管理", title: "DH3项目主文档", path: "https://example.com/dh3", type: "url", note: "项目主要文档和计划" },
+            { id: 2, category: "工具", title: "设计工具文件夹", path: "\\\\10.4.9.25\\Design\\Tools", type: "folder", note: "设计相关工具软件" },
+            { id: 3, category: "开发", title: "代码仓库", path: "https://github.com/Cybereign/DH3", type: "url", note: "项目代码仓库" },
+            { id: 4, category: "测试", title: "测试用例", path: "D:\\Projects\\DH3\\TestCases", type: "folder", note: "测试用例文档" },
+            { id: 5, category: "文档", title: "API文档", path: "https://api.example.com/docs", type: "url", note: "API接口文档" },
+            { id: 6, category: "项目管理", title: "进度跟踪表", path: "\\\\10.4.9.25\\Project\\Track", type: "folder", note: "项目进度跟踪" },
+            { id: 7, category: "开发", title: "开发环境配置", path: "https://dev.example.com", type: "url", note: "开发环境访问地址" },
+            { id: 8, category: "测试", title: "测试报告", path: "D:\\Reports\\Test", type: "folder", note: "测试报告汇总" },
+            { id: 9, category: "工具", title: "项目管理工具", path: "https://trello.com/dh3", type: "url", note: "项目看板管理" },
+            { id: 10, category: "文档", title: "用户手册", path: "\\\\10.4.9.25\\Docs\\Manual", type: "folder", note: "用户使用手册" }
+        ];
+
+        // 默认管理员账户
+        const DEFAULT_ADMIN_ACCOUNTS = [
+            { 
+                username: "admin", 
+                passwordHash: "240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9", // admin123
+                name: "系统管理员",
+                permissions: ["read", "write", "delete", "export", "config"]
+            },
+            { 
+                username: "user", 
+                passwordHash: "ecb666d778725ec97307044d642bf4d160aabb76f56c0069c71ea25b1e926825", // user123
+                name: "普通用户",
+                permissions: ["read", "write"]
+            }
+        ];
+
+        // 默认应用配置
+        const DEFAULT_APP_CONFIG = {
+            version: "1.0.0",
+            autoLogout: 60,
+            maxLoginAttempts: 5,
+            source: "Builtin"
+        };
+
+        // 默认分类列表
+        const DEFAULT_CATEGORY_LIST = [
+            { id: "category1", name: "项目管理" },
+            { id: "category2", name: "开发" },
+            { id: "category3", name: "测试" },
+            { id: "category4", name: "文档" },
+            { id: "category5", name: "工具" }
+        ];
+
+        // 默认分类映射
+        const DEFAULT_CATEGORY_MAP = {
+            "category1": "项目管理",
+            "category2": "开发",
+            "category3": "测试",
+            "category4": "文档",
+            "category5": "工具"
+        };
+    </script>
 
     <script>
         // 示例数据 - 将从GitHub配置加载
@@ -1292,7 +1368,7 @@
         
         // GitHub配置信息
         const GITHUB_OWNER = 'Cybereign';
-        const GITHUB_REPO = 'DH1securityconfig';
+        const GITHUB_REPO = 'DH3SecurityConfig';
         const GITHUB_BRANCH = 'main';
         const GITHUB_CONFIG_BASE = `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}`;
         
@@ -1901,7 +1977,7 @@
 
                 // 3. 创建Excel工作簿
                 const workbook = XLSX.utils.book_new();
-                XLSX.utils.book_append_sheet(workbook, worksheet, 'DH1项目索引表');
+                XLSX.utils.book_append_sheet(workbook, worksheet, 'DH3项目索引表');
                 
                 // 4. 转换为Base64
                 const excelBuffer = XLSX.write(workbook, { 
@@ -2465,12 +2541,15 @@
             return hashHex;
         }
 
-        // 创建分类颜色映射函数
+        // 创建分类颜色映射函数 - 修复版
         function createCategoryColorMap() {
             const colorMap = {};
             const uniqueCategories = [...new Set(tableData.map(item => item.category).filter(Boolean))];
             
-            uniqueCategories.forEach((category, index) => {
+            // 按分类名称排序，确保颜色分配的一致性
+            const sortedCategories = uniqueCategories.sort((a, b) => a.localeCompare(b, 'zh-CN'));
+            
+            sortedCategories.forEach((category, index) => {
                 const colorIndex = (index % 10) + 1;
                 colorMap[category] = `category-${colorIndex}`;
             });
@@ -2478,7 +2557,7 @@
             return colorMap;
         }
 
-        // 渲染表格
+        // 渲染表格 - 修复了颜色不一致问题
         function renderTable(data) {
             console.log(`🔄 渲染表格，数据条数: ${data.length}`);
             
@@ -2492,12 +2571,14 @@
             
             tableBody.innerHTML = data.map(item => {
                 const isUrl = item.type === 'url';
-                const linkClass = isUrl ? 'link' : 'link folder-link';
                 const iconClass = isUrl ? 'fas fa-external-link-alt' : 'fas fa-folder-open';
                 const badgeClass = isUrl ? 'badge-url' : 'badge-folder';
                 const badgeText = isUrl ? '网页' : '文件夹';
                 const categoryName = item.category || `分类${item.id}`;
                 const categoryClass = categoryColorMap[categoryName] || 'category-1';
+                
+                // 从categoryClass提取颜色编号，用于链接继承相同的颜色
+                const colorNumber = categoryClass.replace('category-', '');
                 
                 if (isUrl) {
                     return `
@@ -2505,7 +2586,7 @@
                         <td>${item.id}</td>
                         <td><span class="category ${categoryClass}">${categoryName}</span></td>
                         <td>
-                            <a href="${item.path}" target="_blank" class="${linkClass}">
+                            <a href="${item.path}" target="_blank" class="link" style="color: var(--category-color-${colorNumber});">
                                 <i class="${iconClass} link-icon"></i> 
                                 ${item.title}
                                 <span class="path-type-badge ${badgeClass}">${badgeText}</span>
@@ -2529,7 +2610,7 @@
                         <td>${item.id}</td>
                         <td><span class="category ${categoryClass}">${categoryName}</span></td>
                         <td>
-                            <a href="#" class="${linkClass}" onclick="return openFolder('${item.path.replace(/\\/g, '\\\\')}')">
+                            <a href="#" class="link folder-link" onclick="return openFolder('${item.path.replace(/\\/g, '\\\\')}')" style="color: var(--category-color-${colorNumber});">
                                 <i class="${iconClass} link-icon"></i> 
                                 ${item.title}
                                 <span class="path-type-badge ${badgeClass}">${badgeText}</span>
@@ -2805,11 +2886,11 @@
 
         // 数据持久化函数
         function saveDataToStorage() {
-            localStorage.setItem('DH1h5IndexData', JSON.stringify(tableData));
+            localStorage.setItem('DH3h5IndexData', JSON.stringify(tableData));
         }
 
         function loadDataFromStorage() {
-            const savedData = localStorage.getItem('DH1h5IndexData');
+            const savedData = localStorage.getItem('DH3h5IndexData');
             if (savedData) {
                 return JSON.parse(savedData);
             }
@@ -2818,11 +2899,11 @@
 
         // 表头配置持久化
         function saveHeadersToStorage() {
-            localStorage.setItem('DH1h5IndexHeaders', JSON.stringify(headerConfig));
+            localStorage.setItem('DH3h5IndexHeaders', JSON.stringify(headerConfig));
         }
 
         function loadHeadersFromStorage() {
-            const savedHeaders = localStorage.getItem('DH1h5IndexHeaders');
+            const savedHeaders = localStorage.getItem('DH3h5IndexHeaders');
             if (savedHeaders) {
                 return JSON.parse(savedHeaders);
             }
@@ -2864,7 +2945,7 @@
 
         // 检查登录状态
         function checkLoginStatus() {
-            const savedUser = localStorage.getItem('DH1h5IndexCurrentUser');
+            const savedUser = localStorage.getItem('DH3h5IndexCurrentUser');
             if (savedUser) {
                 const user = JSON.parse(savedUser);
                 loginSuccess(user);
@@ -3361,7 +3442,7 @@
             isLoggedIn = true;
             currentUser = user;
             
-            localStorage.setItem('DH1h5IndexCurrentUser', JSON.stringify({
+            localStorage.setItem('DH3h5IndexCurrentUser', JSON.stringify({
                 username: user.username,
                 name: user.name,
                 permissions: user.permissions || ['read']
@@ -3410,7 +3491,7 @@
             const activeCategory = document.querySelector('.filter-btn.active')?.dataset.category || 'all';
             filterTable(searchTerm, activeCategory);
             
-            localStorage.removeItem('DH1h5IndexCurrentUser');
+            localStorage.removeItem('DH3h5IndexCurrentUser');
             showToast('您已成功退出登录', 'info');
         }
 
@@ -3623,7 +3704,7 @@
                 worksheet['!cols'] = colWidths;
 
                 const workbook = XLSX.utils.book_new();
-                XLSX.utils.book_append_sheet(workbook, worksheet, 'DH1项目索引表');
+                XLSX.utils.book_append_sheet(workbook, worksheet, 'DH3项目索引表');
                 
                 const excelBuffer = XLSX.write(workbook, { 
                     bookType: 'xlsx', 
@@ -3679,8 +3760,8 @@
                 worksheet['!cols'] = colWidths;
 
                 const workbook = XLSX.utils.book_new();
-                XLSX.utils.book_append_sheet(workbook, worksheet, 'DH1项目索引表');
-                XLSX.writeFile(workbook, 'DH1项目HelpMe索引表.xlsx');
+                XLSX.utils.book_append_sheet(workbook, worksheet, 'DH3项目索引表');
+                XLSX.writeFile(workbook, 'DH3项目HelpMe索引表.xlsx');
                 
                 showToast('Excel文件下载成功！', 'success');
                 
@@ -3699,10 +3780,10 @@
             
             const updatedHTML = generateUpdatedHTML();
             const blob = new Blob([updatedHTML], { type: 'text/html' });
-            const url = URL.revokeObjectURL(blob);
+            const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'DH1项目HelpMe索引表_更新版.html';
+            a.download = 'DH3项目HelpMe索引表_更新版.html';
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
@@ -3735,7 +3816,7 @@
             if (confirm('确定要重置数据吗？这将清除所有本地修改，恢复为GitHub securityconfig的数据。')) {
                 loadConfigFromGitHub(true).then(success => {
                     if (success) {
-                        localStorage.removeItem('DH1h5IndexData');
+                        localStorage.removeItem('DH3h5IndexData');
                         showToast('数据已重置为GitHub securityconfig的初始状态', 'success');
                     } else {
                         showToast('GitHub数据加载失败，请检查网络连接', 'error');
@@ -3749,9 +3830,9 @@
             const decodedPath = path.replace(/\\\\/g, '\\');
             
             if (isLocalEnvironment()) {
-                return attemptDirectOpen(path);
+                return attemptDirectOpen(decodedPath);
             } else {
-                return offerPathCopy(path, '由于网页安全限制，无法直接打开本地文件夹。');
+                return offerPathCopy(decodedPath, '由于网页安全限制，无法直接打开本地文件夹。');
             }
         }
 
