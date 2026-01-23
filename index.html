@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DH1项目HelpMe索引表</title>
+    <title id="pageTitle">DH3项目HelpMe索引表</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -1041,7 +1041,7 @@
         <header>
             <div class="header-content">
                 <div>
-                    <h1>DH1项目HelpMe索引表</h1>
+                    <h1 id="mainTitle">DH3项目HelpMe索引表</h1>
                     <div class="header-status" id="headerStatus">
                         <i class="fas fa-info-circle"></i>
                         <span id="statusText">正在初始化系统...</span>
@@ -1303,78 +1303,105 @@
     <!-- 引入SheetJS库用于处理Excel文件 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     
-    <!-- 引入默认数据文件 -->
     <script>
-        // 默认数据
-        const DEFAULT_TABLE_DATA = [
-            { id: 1, category: "项目管理", title: "DH1项目主文档", path: "https://example.com/DH1", type: "url", note: "项目主要文档和计划" },
-            { id: 2, category: "工具", title: "设计工具文件夹", path: "\\\\10.4.9.25\\Design\\Tools", type: "folder", note: "设计相关工具软件" },
-            { id: 3, category: "开发", title: "代码仓库", path: "https://github.com/Cybereign/DH1", type: "url", note: "项目代码仓库" },
-            { id: 4, category: "测试", title: "测试用例", path: "D:\\Projects\\DH1\\TestCases", type: "folder", note: "测试用例文档" },
-            { id: 5, category: "文档", title: "API文档", path: "https://api.example.com/docs", type: "url", note: "API接口文档" },
-            { id: 6, category: "项目管理", title: "进度跟踪表", path: "\\\\10.4.9.25\\Project\\Track", type: "folder", note: "项目进度跟踪" },
-            { id: 7, category: "开发", title: "开发环境配置", path: "https://dev.example.com", type: "url", note: "开发环境访问地址" },
-            { id: 8, category: "测试", title: "测试报告", path: "D:\\Reports\\Test", type: "folder", note: "测试报告汇总" },
-            { id: 9, category: "工具", title: "项目管理工具", path: "https://trello.com/DH1", type: "url", note: "项目看板管理" },
-            { id: 10, category: "文档", title: "用户手册", path: "\\\\10.4.9.25\\Docs\\Manual", type: "folder", note: "用户使用手册" }
-        ];
-
-        // 默认管理员账户
-        const DEFAULT_ADMIN_ACCOUNTS = [
-            { 
-                username: "admin", 
-                passwordHash: "240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9", // admin123
-                name: "系统管理员",
-                permissions: ["read", "write", "delete", "export", "config"]
+        // ========== 项目配置 ==========
+        // 只需修改这里的变量，就可以切换到其他项目
+        
+        const PROJECT_CONFIG = {
+            // 项目标识（DH3, DH7, 等）
+            prefix: 'DH3',
+            
+            // 项目完整名称
+            name: 'DH3项目',
+            
+            // GitHub仓库配置
+            githubOwner: 'Cybereign',
+            githubRepo: 'DH3SecurityConfig',
+            githubBranch: 'main',
+            
+            // 本地存储键名前缀
+            storagePrefix: 'DH3h5Index',
+            
+            // 默认数据
+            defaultData: [
+                { id: 1, category: "项目管理", title: "DH3项目主文档", path: "https://example.com/dh3", type: "url", note: "项目主要文档和计划" },
+                { id: 2, category: "工具", title: "设计工具文件夹", path: "\\\\10.4.9.25\\Design\\Tools", type: "folder", note: "设计相关工具软件" },
+                { id: 3, category: "开发", title: "代码仓库", path: "https://github.com/Cybereign/DH3", type: "url", note: "项目代码仓库" },
+                { id: 4, category: "测试", title: "测试用例", path: "D:\\Projects\\DH3\\TestCases", type: "folder", note: "测试用例文档" },
+                { id: 5, category: "文档", title: "API文档", path: "https://api.example.com/docs", type: "url", note: "API接口文档" },
+                { id: 6, category: "项目管理", title: "进度跟踪表", path: "\\\\10.4.9.25\\Project\\Track", type: "folder", note: "项目进度跟踪" },
+                { id: 7, category: "开发", title: "开发环境配置", path: "https://dev.example.com", type: "url", note: "开发环境访问地址" },
+                { id: 8, category: "测试", title: "测试报告", path: "D:\\Reports\\Test", type: "folder", note: "测试报告汇总" },
+                { id: 9, category: "工具", title: "项目管理工具", path: "https://trello.com/dh3", type: "url", note: "项目看板管理" },
+                { id: 10, category: "文档", title: "用户手册", path: "\\\\10.4.9.25\\Docs\\Manual", type: "folder", note: "用户使用手册" }
+            ],
+            
+            // 默认管理员账户
+            defaultAdminAccounts: [
+                { 
+                    username: "admin", 
+                    passwordHash: "240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9", // admin123
+                    name: "系统管理员",
+                    permissions: ["read", "write", "delete", "export", "config"]
+                },
+                { 
+                    username: "user", 
+                    passwordHash: "ecb666d778725ec97307044d642bf4d160aabb76f56c0069c71ea25b1e926825", // user123
+                    name: "普通用户",
+                    permissions: ["read", "write"]
+                }
+            ],
+            
+            // 默认应用配置
+            defaultAppConfig: {
+                version: "1.0.0",
+                autoLogout: 60,
+                maxLoginAttempts: 5,
+                source: "Builtin"
             },
-            { 
-                username: "user", 
-                passwordHash: "ecb666d778725ec97307044d642bf4d160aabb76f56c0069c71ea25b1e926825", // user123
-                name: "普通用户",
-                permissions: ["read", "write"]
+            
+            // 默认分类列表
+            defaultCategoryList: [
+                { id: "category1", name: "项目管理" },
+                { id: "category2", name: "开发" },
+                { id: "category3", name: "测试" },
+                { id: "category4", name: "文档" },
+                { id: "category5", name: "工具" }
+            ],
+            
+            // 默认分类映射
+            defaultCategoryMap: {
+                "category1": "项目管理",
+                "category2": "开发",
+                "category3": "测试",
+                "category4": "文档",
+                "category5": "工具"
             }
-        ];
-
-        // 默认应用配置
-        const DEFAULT_APP_CONFIG = {
-            version: "1.0.0",
-            autoLogout: 60,
-            maxLoginAttempts: 5,
-            source: "Builtin"
         };
 
-        // 默认分类列表
-        const DEFAULT_CATEGORY_LIST = [
-            { id: "category1", name: "项目管理" },
-            { id: "category2", name: "开发" },
-            { id: "category3", name: "测试" },
-            { id: "category4", name: "文档" },
-            { id: "category5", name: "工具" }
-        ];
-
-        // 默认分类映射
-        const DEFAULT_CATEGORY_MAP = {
-            "category1": "项目管理",
-            "category2": "开发",
-            "category3": "测试",
-            "category4": "文档",
-            "category5": "工具"
-        };
-    </script>
-
-    <script>
-        // 示例数据 - 将从GitHub配置加载
-        let tableData = [];
+        // 从配置中提取变量
+        const PROJECT_PREFIX = PROJECT_CONFIG.prefix;
+        const PROJECT_NAME = PROJECT_CONFIG.name;
+        const GITHUB_OWNER = PROJECT_CONFIG.githubOwner;
+        const GITHUB_REPO = PROJECT_CONFIG.githubRepo;
+        const GITHUB_BRANCH = PROJECT_CONFIG.githubBranch;
+        const STORAGE_PREFIX = PROJECT_CONFIG.storagePrefix;
         
-        // GitHub配置信息
-        const GITHUB_OWNER = 'Cybereign';
-        const GITHUB_REPO = 'DH1SecurityConfig';
-        const GITHUB_BRANCH = 'main';
+        const DEFAULT_TABLE_DATA = PROJECT_CONFIG.defaultData;
+        const DEFAULT_ADMIN_ACCOUNTS = PROJECT_CONFIG.defaultAdminAccounts;
+        const DEFAULT_APP_CONFIG = PROJECT_CONFIG.defaultAppConfig;
+        const DEFAULT_CATEGORY_LIST = PROJECT_CONFIG.defaultCategoryList;
+        const DEFAULT_CATEGORY_MAP = PROJECT_CONFIG.defaultCategoryMap;
+
+        // 基于配置的GitHub URLs
         const GITHUB_CONFIG_BASE = `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}`;
-        
-        // GitHub API 端点
         const GITHUB_API_BASE = 'https://api.github.com';
         const GITHUB_CONTENT_URL = `${GITHUB_API_BASE}/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents`;
+
+        // ========== 全局变量 ==========
+        
+        // 示例数据 - 将从GitHub配置加载
+        let tableData = [];
         
         // 用户账户信息和配置
         let adminAccounts = [];
@@ -1449,6 +1476,8 @@
         const configVersion = document.getElementById('configVersion');
         const pathTypeButtons = document.querySelectorAll('.path-type-btn');
         const pathExample = document.getElementById('pathExample');
+        const pageTitle = document.getElementById('pageTitle');
+        const mainTitle = document.getElementById('mainTitle');
         
         // 新增的认证相关DOM元素
         const adminToggleBtn = document.getElementById('adminToggleBtn');
@@ -1475,6 +1504,15 @@
         const statusText = document.getElementById('statusText');
         const loadingIndicator = document.getElementById('loadingIndicator');
         const loadingText = document.getElementById('loadingText');
+
+        // ========== 初始化页面标题和标题 ==========
+        function initPageTitles() {
+            const pageTitleText = `${PROJECT_NAME}HelpMe索引表`;
+            const mainTitleText = `${PROJECT_NAME}HelpMe索引表`;
+            
+            pageTitle.textContent = pageTitleText;
+            mainTitle.textContent = mainTitleText;
+        }
 
         // ========== GitHub API 服务类 ==========
 
@@ -1667,7 +1705,7 @@
         function checkDefaultDataLoaded() {
             if (typeof DEFAULT_TABLE_DATA === 'undefined') {
                 console.error('❌ 默认数据文件加载失败');
-                updateStatus('error', '默认数据文件加载失败，请检查 default-data.js 文件是否存在');
+                updateStatus('error', '默认数据文件加载失败');
                 return false;
             }
             console.log('✅ 默认数据文件加载成功（备用数据）');
@@ -1678,7 +1716,7 @@
         function loadDefaultData() {
             try {
                 if (typeof DEFAULT_TABLE_DATA === 'undefined') {
-                    throw new Error('默认数据文件未加载，请检查 default-data.js 文件');
+                    throw new Error('默认数据文件未加载');
                 }
                 
                 tableData = JSON.parse(JSON.stringify(DEFAULT_TABLE_DATA));
@@ -1942,7 +1980,7 @@
             }
 
             try {
-                showLoadingIndicator('正在同步数据到 GitHub Excel 文件...');
+                showLoadingIndicator(`正在同步数据到 ${PROJECT_NAME} GitHub Excel 文件...`);
                 
                 // 1. 准备Excel数据
                 const headers = ['序号', '分类', '标题', '地址', '地址类型', '备注'];
@@ -1977,7 +2015,7 @@
 
                 // 3. 创建Excel工作簿
                 const workbook = XLSX.utils.book_new();
-                XLSX.utils.book_append_sheet(workbook, worksheet, 'DH1项目索引表');
+                XLSX.utils.book_append_sheet(workbook, worksheet, `${PROJECT_NAME}项目索引表`);
                 
                 // 4. 转换为Base64
                 const excelBuffer = XLSX.write(workbook, { 
@@ -1992,7 +2030,7 @@
                 await gitHubService.forceCreateFile(
                     'table.xlsx',
                     excelBase64,
-                    `自动同步表格数据 - ${new Date().toLocaleString()} - 共${tableData.length}条记录`
+                    `${PROJECT_NAME}自动同步表格数据 - ${new Date().toLocaleString()} - 共${tableData.length}条记录`
                 );
 
                 // 6. 立即更新本地数据
@@ -2000,7 +2038,7 @@
                 
                 // 7. 显示成功消息
                 hideLoadingIndicator();
-                showToast('✅ 数据已成功同步到 GitHub Excel 文件！', 'success');
+                showToast(`✅ ${PROJECT_NAME}数据已成功同步到 GitHub Excel 文件！`, 'success');
                 
                 // 8. 直接更新UI，不再从GitHub重新加载
                 const searchTerm = searchInput.value.toLowerCase();
@@ -2025,9 +2063,9 @@
                 hideLoadingIndicator();
                 
                 if (error.message.includes('文件版本冲突')) {
-                    showToast(`同步失败: ${error.message}\n\n请先点击"修复Excel格式"按钮，然后重试同步。`, 'error');
+                    showToast(`${PROJECT_NAME}同步失败: ${error.message}\n\n请先点击"修复Excel格式"按钮，然后重试同步。`, 'error');
                 } else {
-                    showToast(`同步失败: ${error.message}`, 'error');
+                    showToast(`${PROJECT_NAME}同步失败: ${error.message}`, 'error');
                 }
             }
         }
@@ -2169,49 +2207,52 @@
         // ========== 优化的初始化流程 ==========
 
         document.addEventListener('DOMContentLoaded', async () => {
-            console.log('🔄 系统初始化开始...');
+            console.log(`🔄 ${PROJECT_NAME}系统初始化开始...`);
             
-            // 1. 首先检查默认数据是否可用
+            // 1. 初始化页面标题
+            initPageTitles();
+            
+            // 2. 首先检查默认数据是否可用
             if (!checkDefaultDataLoaded()) {
                 console.error('❌ 默认数据不可用，系统初始化失败');
                 return;
             }
             
-            // 2. 加载本地配置
+            // 3. 加载本地配置
             const savedHeaders = loadHeadersFromStorage();
             if (savedHeaders) {
                 headerConfig = savedHeaders;
             }
             updateTableHeaders();
             
-            // 3. 加载GitHub令牌（如果有）
+            // 4. 加载GitHub令牌（如果有）
             loadGitHubToken();
 
-            // 4. 立即显示默认数据（优先显示）
+            // 5. 立即显示默认数据（优先显示）
             console.log('📊 优先显示默认数据...');
             useDefaultConfig(false); // 不显示消息
             
-            // 5. 设置基础UI
+            // 6. 设置基础UI
             configVersion.textContent = '配置版本: 加载中...';
             updateStatus('info', '正在初始化系统，优先显示默认数据...');
             
-            // 6. 设置事件监听器
+            // 7. 设置事件监听器
             setupEventListeners();
             setupAuthEvents();
             checkLoginStatus();
             updateCategorySelect();
             updateButtonVisibility();
             
-            // 7. 初始化拖拽排序
+            // 8. 初始化拖拽排序
             initSorting();
             
-            // 8. 设置自动登出监听器
+            // 9. 设置自动登出监听器
             document.addEventListener('click', resetAutoLogoutTimer);
             document.addEventListener('keypress', resetAutoLogoutTimer);
             document.addEventListener('mousemove', resetAutoLogoutTimer);
             
-            // 9. 异步尝试从GitHub加载最新数据
-            console.log('🔄 开始异步尝试从GitHub加载最新数据...');
+            // 10. 异步尝试从GitHub加载最新数据
+            console.log(`🔄 开始异步尝试从GitHub加载${PROJECT_NAME}最新数据...`);
             
             // 立即显示默认数据后，在后台尝试加载GitHub数据
             setTimeout(async () => {
@@ -2222,22 +2263,22 @@
                     
                     if (githubDataLoaded) {
                         console.log('✅ GitHub数据加载成功，更新显示');
-                        appConfig.source = 'GitHub SecurityConfig';
+                        appConfig.source = `GitHub ${PROJECT_NAME}SecurityConfig`;
                         
                         // 更新配置信息
                         updateConfigVersionInfo(appConfig);
                         
                         if (isLoggedIn) {
-                            updateStatus('success', '已成功加载GitHub最新配置，您当前是管理员模式');
+                            updateStatus('success', `已成功加载${PROJECT_NAME}GitHub最新配置，您当前是管理员模式`);
                         } else {
-                            updateStatus('success', '已成功加载GitHub最新配置，您当前是访客模式，只能查看数据。请登录管理员账户以进行添加、编辑和删除操作。');
+                            updateStatus('success', `已成功加载${PROJECT_NAME}GitHub最新配置，您当前是访客模式，只能查看数据。请登录管理员账户以进行添加、编辑和删除操作。`);
                         }
                         
-                        showToast('✅ 已成功从GitHub加载最新数据', 'success');
+                        showToast(`✅ 已成功从GitHub加载${PROJECT_NAME}最新数据`, 'success');
                     } else {
                         // GitHub加载失败，继续使用默认数据
                         console.log('⚠️ GitHub加载失败，继续使用默认数据');
-                        appConfig.source = 'Builtin (GitHub连接失败)';
+                        appConfig.source = `Builtin (${PROJECT_NAME}GitHub连接失败)`;
                         updateConfigVersionInfo(appConfig);
                         
                         const savedData = loadDataFromStorage();
@@ -2251,9 +2292,9 @@
                             // 确保分类映射一致性
                             ensureCategoryMappingConsistency();
                             
-                            updateStatus('warning', 'GitHub连接失败，使用本地缓存数据。您当前是访客模式，只能查看数据。请登录管理员账户以进行添加、编辑和删除操作。');
+                            updateStatus('warning', `${PROJECT_NAME}GitHub连接失败，使用本地缓存数据。您当前是访客模式，只能查看数据。请登录管理员账户以进行添加、编辑和删除操作。`);
                         } else {
-                            updateStatus('warning', 'GitHub连接失败，使用内置默认数据。您当前是访客模式，只能查看数据。请登录管理员账户以进行添加、编辑和删除操作。');
+                            updateStatus('warning', `${PROJECT_NAME}GitHub连接失败，使用内置默认数据。您当前是访客模式，只能查看数据。请登录管理员账户以进行添加、编辑和删除操作。`);
                         }
                     }
                     
@@ -2262,12 +2303,12 @@
                     // 错误已经被处理，继续使用默认数据
                 }
                 
-                console.log(`📊 初始化完成，最终数据量: ${tableData.length} 条记录，来源: ${appConfig.source}`);
-                showToast(`系统初始化完成，数据来源: ${appConfig.source}`, 'success');
+                console.log(`📊 ${PROJECT_NAME}初始化完成，最终数据量: ${tableData.length} 条记录，来源: ${appConfig.source}`);
+                showToast(`${PROJECT_NAME}系统初始化完成，数据来源: ${appConfig.source}`, 'success');
                 
             }, 100); // 稍微延迟，确保默认数据先显示
             
-            console.log('✅ 系统基础初始化完成，默认数据已显示');
+            console.log(`✅ ${PROJECT_NAME}系统基础初始化完成，默认数据已显示`);
         });
 
         // ========== 认证面板功能 ==========
@@ -2487,14 +2528,14 @@
                 const authResult = await gitHubService.checkAuth();
                 
                 if (authResult.authenticated) {
-                    localStorage.setItem('githubToken', token);
+                    localStorage.setItem(`${STORAGE_PREFIX}GithubToken`, token);
                     authGithubToken.value = '';
                     showAuthStatus('githubStatus', `验证成功！用户: ${authResult.username}`, 'success');
                     
                     updateButtonVisibility();
                     
                     if (isLoggedIn) {
-                        updateStatus('success', '已加载GitHub配置，您当前是管理员模式，GitHub已连接');
+                        updateStatus('success', `已加载${PROJECT_NAME}配置，您当前是管理员模式，GitHub已连接`);
                     }
                 } else {
                     throw new Error('令牌验证失败');
@@ -2886,11 +2927,11 @@
 
         // 数据持久化函数
         function saveDataToStorage() {
-            localStorage.setItem('DH1h5IndexData', JSON.stringify(tableData));
+            localStorage.setItem(`${STORAGE_PREFIX}Data`, JSON.stringify(tableData));
         }
 
         function loadDataFromStorage() {
-            const savedData = localStorage.getItem('DH1h5IndexData');
+            const savedData = localStorage.getItem(`${STORAGE_PREFIX}Data`);
             if (savedData) {
                 return JSON.parse(savedData);
             }
@@ -2899,11 +2940,11 @@
 
         // 表头配置持久化
         function saveHeadersToStorage() {
-            localStorage.setItem('DH1h5IndexHeaders', JSON.stringify(headerConfig));
+            localStorage.setItem(`${STORAGE_PREFIX}Headers`, JSON.stringify(headerConfig));
         }
 
         function loadHeadersFromStorage() {
-            const savedHeaders = localStorage.getItem('DH1h5IndexHeaders');
+            const savedHeaders = localStorage.getItem(`${STORAGE_PREFIX}Headers`);
             if (savedHeaders) {
                 return JSON.parse(savedHeaders);
             }
@@ -2945,7 +2986,7 @@
 
         // 检查登录状态
         function checkLoginStatus() {
-            const savedUser = localStorage.getItem('DH1h5IndexCurrentUser');
+            const savedUser = localStorage.getItem(`${STORAGE_PREFIX}CurrentUser`);
             if (savedUser) {
                 const user = JSON.parse(savedUser);
                 loginSuccess(user);
@@ -3298,7 +3339,7 @@
             
             const link = document.createElement('a');
             link.href = URL.createObjectURL(dataBlob);
-            link.download = 'h5-index-data.json';
+            link.download = `${PROJECT_PREFIX.toLowerCase()}-index-data.json`;
             link.click();
             
             showToast('数据导出成功！', 'success');
@@ -3356,13 +3397,13 @@
 
         // 刷新配置 - 优化的版本
         async function refreshConfig() {
-            console.log('🔄 手动刷新配置...');
+            console.log(`🔄 手动刷新${PROJECT_NAME}配置...`);
             
             try {
                 const success = await loadConfigFromGitHub(true); // 强制刷新
                 
                 if (success) {
-                    showToast('配置刷新成功！已从GitHub加载最新数据', 'success');
+                    showToast(`${PROJECT_NAME}配置刷新成功！已从GitHub加载最新数据`, 'success');
                     
                     if (isLoggedIn && currentUser) {
                         const updatedUser = adminAccounts.find(acc => acc.username === currentUser.username);
@@ -3374,12 +3415,12 @@
                     }
                 } else {
                     // GitHub刷新失败，使用当前数据
-                    showToast('GitHub刷新失败，继续使用当前数据', 'warning');
+                    showToast(`${PROJECT_NAME}GitHub刷新失败，继续使用当前数据`, 'warning');
                 }
                 
             } catch (error) {
                 console.error('刷新配置异常:', error);
-                showToast('刷新配置失败: ' + error.message, 'error');
+                showToast(`${PROJECT_NAME}刷新配置失败: ` + error.message, 'error');
             }
         }
 
@@ -3442,7 +3483,7 @@
             isLoggedIn = true;
             currentUser = user;
             
-            localStorage.setItem('DH1h5IndexCurrentUser', JSON.stringify({
+            localStorage.setItem(`${STORAGE_PREFIX}CurrentUser`, JSON.stringify({
                 username: user.username,
                 name: user.name,
                 permissions: user.permissions || ['read']
@@ -3450,9 +3491,9 @@
             
             // 更新状态显示
             if (gitHubService) {
-                updateStatus('success', '您当前是管理员模式，GitHub已连接');
+                updateStatus('success', `您当前是${PROJECT_NAME}管理员模式，GitHub已连接`);
             } else {
-                updateStatus('success', '您当前是管理员模式');
+                updateStatus('success', `您当前是${PROJECT_NAME}管理员模式`);
             }
             
             // 更新认证面板中的用户信息
@@ -3466,7 +3507,7 @@
             filterTable(searchTerm, activeCategory);
             
             setupAutoLogout();
-            showToast(`欢迎回来，${user.name}！`, 'success');
+            showToast(`欢迎回来${PROJECT_NAME}，${user.name}！`, 'success');
         }
 
         // 处理登出
@@ -3480,7 +3521,7 @@
             }
             
             // 更新状态显示
-            updateStatus('warning', '您当前是访客模式，只能查看数据。请登录管理员账户以进行添加、编辑和删除操作。');
+            updateStatus('warning', `您当前是${PROJECT_NAME}访客模式，只能查看数据。请登录管理员账户以进行添加、编辑和删除操作。`);
             
             // 更新认证面板中的用户信息
             updateAuthUserInfo();
@@ -3491,8 +3532,8 @@
             const activeCategory = document.querySelector('.filter-btn.active')?.dataset.category || 'all';
             filterTable(searchTerm, activeCategory);
             
-            localStorage.removeItem('DH1h5IndexCurrentUser');
-            showToast('您已成功退出登录', 'info');
+            localStorage.removeItem(`${STORAGE_PREFIX}CurrentUser`);
+            showToast(`您已成功退出${PROJECT_NAME}登录`, 'info');
         }
 
         // 更新分类筛选器
@@ -3629,17 +3670,17 @@
 
         // 加载保存的 GitHub 令牌
         function loadGitHubToken() {
-            const savedToken = localStorage.getItem('githubToken');
+            const savedToken = localStorage.getItem(`${STORAGE_PREFIX}GithubToken`);
             if (savedToken) {
                 gitHubService = new GitHubService(savedToken);
                 gitHubService.checkAuth().then(authResult => {
                     if (authResult.authenticated) {
                         console.log('GitHub令牌验证成功:', authResult.username);
                         if (isLoggedIn) {
-                            updateStatus('success', '您当前是管理员模式，GitHub已连接');
+                            updateStatus('success', `您当前是${PROJECT_NAME}管理员模式，GitHub已连接`);
                         }
                     } else {
-                        localStorage.removeItem('githubToken');
+                        localStorage.removeItem(`${STORAGE_PREFIX}GithubToken`);
                         gitHubService = null;
                     }
                 });
@@ -3674,7 +3715,7 @@
             }
 
             try {
-                showLoadingIndicator('正在修复 Excel 文件格式...');
+                showLoadingIndicator(`正在修复 ${PROJECT_NAME} Excel 文件格式...`);
 
                 const headers = ['序号', '分类', '标题', '地址', '地址类型', '备注'];
                 const excelData = [headers];
@@ -3704,7 +3745,7 @@
                 worksheet['!cols'] = colWidths;
 
                 const workbook = XLSX.utils.book_new();
-                XLSX.utils.book_append_sheet(workbook, worksheet, 'DH1项目索引表');
+                XLSX.utils.book_append_sheet(workbook, worksheet, `${PROJECT_NAME}项目索引表`);
                 
                 const excelBuffer = XLSX.write(workbook, { 
                     bookType: 'xlsx', 
@@ -3717,16 +3758,16 @@
                 await gitHubService.forceCreateNewFile(
                     'table.xlsx',
                     excelBase64,
-                    `修复Excel文件格式 - ${new Date().toLocaleString()}`
+                    `修复${PROJECT_NAME}Excel文件格式 - ${new Date().toLocaleString()}`
                 );
 
                 hideLoadingIndicator();
-                showToast('✅ Excel文件格式修复完成！SHA冲突已解决。现在可以正常使用同步功能。', 'success');
+                showToast(`✅ ${PROJECT_NAME}Excel文件格式修复完成！SHA冲突已解决。现在可以正常使用同步功能。`, 'success');
                 
             } catch (error) {
                 console.error('修复Excel格式失败:', error);
                 hideLoadingIndicator();
-                showToast(`修复失败: ${error.message}`, 'error');
+                showToast(`${PROJECT_NAME}修复失败: ${error.message}`, 'error');
             }
         }
 
@@ -3760,14 +3801,14 @@
                 worksheet['!cols'] = colWidths;
 
                 const workbook = XLSX.utils.book_new();
-                XLSX.utils.book_append_sheet(workbook, worksheet, 'DH1项目索引表');
-                XLSX.writeFile(workbook, 'DH1项目HelpMe索引表.xlsx');
+                XLSX.utils.book_append_sheet(workbook, worksheet, `${PROJECT_NAME}项目索引表`);
+                XLSX.writeFile(workbook, `${PROJECT_NAME}HelpMe索引表.xlsx`);
                 
-                showToast('Excel文件下载成功！', 'success');
+                showToast(`${PROJECT_NAME}Excel文件下载成功！`, 'success');
                 
             } catch (error) {
                 console.error('下载Excel失败:', error);
-                showToast('下载Excel文件失败: ' + error.message, 'error');
+                showToast(`${PROJECT_NAME}下载Excel文件失败: ` + error.message, 'error');
             }
         }
 
@@ -3783,22 +3824,25 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'DH1项目HelpMe索引表_更新版.html';
+            a.download = `${PROJECT_NAME}HelpMe索引表_更新版.html`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
             
-            showToast('更新后的HTML文件已生成并开始下载！', 'success');
+            showToast(`${PROJECT_NAME}更新后的HTML文件已生成并开始下载！`, 'success');
         }
 
         // 生成包含当前数据的HTML
         function generateUpdatedHTML() {
             const currentHTML = document.documentElement.outerHTML;
+            
+            // 更新数据定义
             const dataRegex = /let tableData = \[[\s\S]*?\];/;
             const newDataDefinition = `let tableData = ${JSON.stringify(tableData, null, 8)};`;
             let updatedHTML = currentHTML.replace(dataRegex, newDataDefinition);
             
+            // 更新表体为空
             const tableBodyRegex = /<tbody id="tableBody">[\s\S]*?<\/tbody>/;
             const emptyTableBody = `<tbody id="tableBody">\n                    <!-- 表格内容将通过JavaScript动态生成 -->\n                </tbody>`;
             updatedHTML = updatedHTML.replace(tableBodyRegex, emptyTableBody);
@@ -3813,13 +3857,13 @@
                 return;
             }
             
-            if (confirm('确定要重置数据吗？这将清除所有本地修改，恢复为GitHub securityconfig的数据。')) {
+            if (confirm(`确定要重置${PROJECT_NAME}数据吗？这将清除所有本地修改，恢复为GitHub securityconfig的数据。`)) {
                 loadConfigFromGitHub(true).then(success => {
                     if (success) {
-                        localStorage.removeItem('DH1h5IndexData');
-                        showToast('数据已重置为GitHub securityconfig的初始状态', 'success');
+                        localStorage.removeItem(`${STORAGE_PREFIX}Data`);
+                        showToast(`${PROJECT_NAME}数据已重置为GitHub securityconfig的初始状态`, 'success');
                     } else {
-                        showToast('GitHub数据加载失败，请检查网络连接', 'error');
+                        showToast(`${PROJECT_NAME}GitHub数据加载失败，请检查网络连接`, 'error');
                     }
                 });
             }
@@ -4032,13 +4076,13 @@
             return categoryMap;
         };
 
-        // 测试ID 12的分类
-        window.testItem12 = function() {
-            const item12 = tableData.find(item => item.id === 12);
-            if (item12) {
-                console.log('ID 12的数据:', item12);
-                const mapping = Object.entries(categoryMap).find(([id, name]) => name === item12.category);
-                console.log(`分类 "${item12.category}" 的映射:`, mapping);
+        // 测试特定ID的分类
+        window.testItem = function(id) {
+            const item = tableData.find(item => item.id === id);
+            if (item) {
+                console.log(`ID ${id}的数据:`, item);
+                const mapping = Object.entries(categoryMap).find(([id, name]) => name === item.category);
+                console.log(`分类 "${item.category}" 的映射:`, mapping);
                 
                 if (mapping) {
                     console.log(`应该在选择器中选中: ${mapping[0]}`);
@@ -4048,12 +4092,25 @@
                     });
                 }
             }
-            return item12;
+            return item;
+        };
+
+        // 显示当前项目配置
+        window.showProjectConfig = function() {
+            console.group('📋 当前项目配置');
+            console.log('项目前缀:', PROJECT_PREFIX);
+            console.log('项目名称:', PROJECT_NAME);
+            console.log('GitHub仓库:', `${GITHUB_OWNER}/${GITHUB_REPO}`);
+            console.log('存储前缀:', STORAGE_PREFIX);
+            console.log('默认数据条数:', DEFAULT_TABLE_DATA.length);
+            console.log('默认分类数量:', DEFAULT_CATEGORY_LIST.length);
+            console.groupEnd();
+            return PROJECT_CONFIG;
         };
 
         // 页面加载后自动检查
         setTimeout(() => {
-            console.log('🔍 页面加载完成，检查分类映射...');
+            console.log(`🔍 ${PROJECT_NAME}页面加载完成，检查分类映射...`);
             debugCategories();
         }, 2000);
     </script>
